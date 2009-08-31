@@ -1,0 +1,147 @@
+顔画像モジュール -FSM- 
+2009/02/13更新
+
+#1 はじめに
+本モジュールはGalateaプロジェクトの1モジュールである顔画像合成モジュール（FSM）
+を構成しています。
+
+
+#2 動作環境
+本ソフトの動作確認は2009/02/13現在、以下のようなハードウェア環境で行われています。
+
+(Test: Sony VAIO Z: VGN-Z90NS)
+CPU: Intel(R) Core(TM)2 T9600 2.80GHz
+Memory: 4GB
+Graphics: NVIDIA GeForce9300M GS
+OS: Windows Vista Business 32bit版
+
+尚、想定される、動作必要環境は次の通りです（描画フレームレート20-30[fps]）。
+OS: Widnows NT系 (32bit)
+CPU: PentiumIII 以上
+Memory: 256M (512M推奨)
+Graphics: NVIDIA GeForce2相当
+
+またコンパイルには 
+Microsoft Developer Studio: Visual C++ 2005
+を使用しています。
+以下のインストール方法は全てこのコンパイラを用いています。
+
+#3 インストールおよび実行
+FSM***.zipを解凍し、適当なディレクトリにFSMフォルダごと移動して下さい。
+現在のFSMを移動した場所を$とすると
+$/FSM/bin/まで移動し
+FSM.exe
+を起動すると単体動作します。
+
+・実行ファイルは以下のような引数をもつことができます．
+fsm.exe [-C config_name] [-p x y] [-s x_size y_size]
+*OPTION*
+[-C config_name] コンフィグファイル読み込み先の指定
+[-p x y] 画面位置[x,y]ピクセルへ移動
+[-s x_size y_size] 画面サイズ[x_size, y_size]に変更
+ 
+コンフィグファイルを指定することができます。
+
+＊fsm_mmi.exeはGalatea MMIを実行する時必要なファイルです。
+
+・また実行する前に定義ファイルである(FSM)\data\config.txtを読み込みます。
+このファイルの設定方法は(FSM)\manual_config.txtをお読み下さい。
+
+
+#4 コンパイルに必要なライブラリ
+コンパイルの前にライブラリのインストールが必要です。
+OpenGL ライブラリ、GLUTライブラリが必要です。
+
+・OpenGLライブラリ
+グラフィックス描画用ライブラリです。
+http://www.opengl.org
+* このライブラリはWindows NT, 2000, XP系でしたら既にインストールされています。
+もし、Windows9x系でしたらインストールの必要がある可能性があります。
+上記URLを参考にインストールをお願いします。
+* Version 1.2 以上
+
+・GLUTライブラリ (OpenGL Utility Toolkit(GLUT))
+OpenGLをサポートするライブラリです。
+http://www.xmission.com/~nate/glut.html
+上記サイトからWin32 dll, libのBinaryをダウンロードするか、ソースをコンパイルし
+てライブラリを制作してください。
+* Version 3.7.6
+制作したライブラリは次の場所に入れておくと便利です。
+（以下GLUTのREADMEから抜粋）
+
+  o  Microsoft Developer Studio 6 workspace and project files have
+       been included in the source code distribution.
+       
+       To build the glut dll: 
+       First, open Microsoft Developer Studio.
+       Then, select File -> Open Workspace and find the glut.dsw file
+       in the file dialog and double-click on it.  
+       Finally, select Build -> Build glut32.dll.
+       When the build is finished, it will copy:
+       glut32.dll to %WinDir%\System, 
+       glut32.lib to $(MSDevDir)\..\..\VC98\lib, and 
+       glut.h     to $(MSDevDir)\..\..\VC98\include\GL.
+       
+       Additional workspace files have been included in the progs, test
+       and lib directories to build the progs, tests and libs respectively.
+
+・glpngライブラリ(FSM内のソースに組み込まれています)
+PNGファイルを読み込むために必要なファイルです
+ http://www.wyatt100.freeserve.co.uk/download.htm
+上記サイトにあるglpng.zipが本ソースに含まれています。
+
+#5 ファイル構成
+本アプリケーションのファイル構成は次のようになっております。
+
+$ ---　debug_sample.dat (デバッグ用のサンプル一覧）
+   |
+   -- data (アプリケーションに必要なデータ）
+   |
+   -- sample (FSMモジュールに使用しているサンプル）
+   |         
+   -- src  (ソースファイル)
+   |
+   -- visualc (Windows用Make(プロジェクト)ファイル)
+   |      |
+   |      -- dummy_client ... (Windows用のダミープラグ：ソース)
+   | 
+   -- bin (実行ファイル)
+
+
+#6 コンパイル
+visualc フォルダに移動し、Visual Studioにてfsm.slnを開いてください。
+そこでコンパイルを行ってください。#3 で完全に各種ライブラリがインストール
+完了していれば問題なくコンパイルが完了します。
+
+#7 Windows版とUnix版の違い
+・主な変更点（Win32 vs. gcc[Linux])
+（１）現在時刻の獲得用関数: 
+　Win32:　timeGetTime() 
+　gcc:    gettimeofday()
+
+（２）システム一時停止：sleep
+  Win32:  sleep()
+  gcc: usleep()
+
+（３）標準入出力部分（Main.cpp, Main.h）
+#ifndef WIN32
+#endif
+内でコメントアウトしてあります。
+詳しくはソースファイルをご覧ください。
+
+#8　ダミーモジュールによる疑似標準入出力
+標準入出力によるDebugができないため、ダミーモジュールを用意しました。
+
+ダミーモジュールソース：(FSM)\visualc\dummy_client\に存在します。
+ダミーモジュールの実行：(FSM)\visualc\dummy.batを実行して下さい。
+操作方法：実行しますと、コンソールウインドが開きます。そこに各種コマンドを
+入力することでFSMにさまざまな命令を与えることが可能になります。
+コマンドの説明は(FSM)\command.pdfに書かれています。
+サンプルコマンドは(FSM)\debug_sample.datに書かれています。
+
+ダミーモジュールはWinsockを使って通信しています。
+（注）プログラムの仕様上このモジュールとFSMとは同一のコンピュータ（IP上）
+で使用してください。
+
+以上
+

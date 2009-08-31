@@ -1,0 +1,613 @@
+顔画像合成モジュール version up情報
+
+v2.35 2009/02/13　連続音声認識コンソーシアム2008年度最終版
+・Offsetコマンドの導入
+        set Offset = <オフセット値[ms]>
+	発話タイミングをオフセット値だけずらす
+	例：set Offset = 100
+	-> 100ms 発話タイミングをずらす（遅らせる）
+	inq Offset
+	rep Offset = 100ms
+	＊音声合成と連携していません。独立したコマンドです。
+	Protocal Version を2.06に変更
+・高精度テクスチャ画像（PNG形式）対応：テスト済
+・ユーザがFaceFit、FaceMakerで作成したユーザ定義表情を導入可能
+        FaceExpのパターン2～5をユーザ定義エリアに対応（パターン1はデフォルト表情）
+	＊6感情（Happy, Anger, Fear, Surprise, Sad, Disgust）に対応
+	導入方法：FSM\data\_AU_Datasに"user{表情名}{パターン}.pnt"があります。
+	ユーザが作成した表情ファイル（例：hoge.pnt）をuser{表情名}{パターン}.pnt
+	に上書きすることで、操作することができます。
+	またFaceExpコマンド、USERDEFも上記と同様にパターン1～5をユーザ定義エリア
+	に対応。
+	導入方法：FSM\data\_AU_Datasに"userdef{パターン}.pnt"があります。
+	ユーザが作成した表情ファイル（例：hoge.pnt）をuserdef{パターン}.pnt
+	に上書きすることで、操作することができます。
+・Windows検証用PCの変更
+・マニュアルの更新
+
+v2.342 2008/08/18　実行時の引数追加
+・fsm [-s size_x size_y] [-p pos_x pos_y]の機能を再び追加しました。
+
+v2.341 2008/08/11　バグ対応版（マイナーアップデート）
+・Knoppix 、Vine 4.x 対策版
+	int main() の最初にglutInit(&argc, argv);を追加
+・ソースコード改善（FaceView, FaceModelViewクラス）
+
+v2.34 2008/08/08　2008年度講習直前版
+・Captureコマンドの導入
+	set Capture = フォルダ名 ファイル名 描画フレームレート 
+	画面のキャプチャを行う。
+	例：set Capture = . sample_ 30
+	-> ./ディレクトリ内にsample_XXXXX.bmp（Xは数字が入ります）ファイルを保存。
+	inq Capture
+	rep BackgroundSet = ENABLE or DISABLE
+	（注意）画面キャプチャはset Speak = NOWが実行されたときからキャプチャを
+	開始し、発話終了後にキャプチャ終了、キャプチャモードを抜け、通常
+	（リアルタイム描画モード）に戻ります。
+	キャプチャ中はset Speak.sync、set Speak.syncoffset = 1000が無効と
+	なります。
+・config.txtの拡張
+	Resources.hに入っていた各種パラメータをconfig.txtでも変更できるよう
+	にしました。詳しくはmanual_config.txtをご覧下さい。
+	例: fsm -C config.txt
+	＊本機能拡張で、
+	「起動時，引数指定でFSMのウインドウサイズ・位置の調節可能
+	fsm [-s size_x sizez_y] [-p pos_x pos_y]」
+	の引数は削除しました（config.txtで変更できます）
+・バグフィックスの改良
+	～命令コマンド分析部分のバグ（空の命令を送ると、エラーが発生する）
+	～Textureクラスのバグ
+・Windowsコンパイラの変更
+	～VC6からVisual Studio C++ 2005に変更しました。
+・Windows検証用PCの変更
+・マニュアルの更新
+
+
+v2.33 2006/10/13　連続音声認識コンソーシアム2006年版
+・英語viseme対応
+	～data/config.txt：SetVisemeの項目を追加。JPモードで日本語、
+	ENモードで英語モード。デフォルトは日本語モード
+
+・PNGファイル画像対応
+　　　　～BMP、SGI形式と同様にPNGの読み込みが可能
+	　glpngライブラリを使用
+　　　　  http://www.wyatt100.freeserve.co.uk/download.htm
+・画像対応に伴い、Imageライブラリの更新、OpenGLコードの改良による処理速度向上
+
+・コマンドの追加（１）：音声合成のローカル時間を伝えるコマンド
+	<set Speak.sync = ss_value>
+	音声合成のローカル時間を伝えるコマンド
+	ss_value: 音声合成のローカル時間 [ms]: 
+　　　　＊値が0のときはローカル時間指定なし
+	(例) set Speak.sync = 1000 ... 音声合成のローカル時間は1000ms
+
+・コマンドの追加（２）：発話アニメーションスタートオフセット値設定
+	<set Speak.syncoffset = offset_value>
+        offset_value: 発話開始時間オフセット値 [ms]
+	(例) set Speak.syncoffset = 1000 ... 発話開始時間を1000ms遅らす
+	
+	<inq Speak.syncoffset>：現在のオフセット値の問い合わせ
+	rep Speak.syncoffset = 1000 ... 現在のオフセット値は1000ms
+
+	- これに伴いProtocal Version を2.04にバージョンアップしました。
+
+・コマンドの追加に伴うコマンドマニュアルの改訂
+
+・FSM側リップシンクの同期補正
+
+v2.32 -欠番
+
+v2.31 2004/11/29
+・Galatea_MMIでのFSM動作に不具合があった問題を修正
+
+v2.30 2004/11/16 連続音声認識コンソーシアム2004年版
+・発話中にset Speak = STOPしたとき、口が開きっぱなしになる問題を解決
+	～自動的に口が閉じるように改良
+	（ご指示ありがとうございました～西本先生）
+
+・コマンドの追加：エージェントの透明化（透明度の指定、演出用）
+	<set AgentAlpha = alpha_value> 
+	alpha_value (double型）0.0[透明] ～ 1.0[通常描画]まで指定可能
+	(例)
+	"set AgentAlpha = 0.5"	... エージェントを半透明化する
+	"set AgentAlpha = 0.0"	... エージェントを透明（非表示(注)）にする
+	（注）AgentAlphaコマンドとAgentEnableコマンドは独立して動作します。
+	従って、AgentEnableを非表示、AgentAlphaを1.0としても表示されません。
+	またAgentEnableを表示、AgentAlphaを0.0としても表示されません。
+	（コメント）このコマンドで1.0以外を入力した場合、口内および歯モデルは
+	非表示となります。
+	これに伴いProtocal Version を2.03にバージョンアップしました．
+	（提案ありがとうございました～西本先生）
+
+・コマンドの追加に伴うコマンドマニュアルの改訂
+
+
+v2.20 2004/07/15 連続音声認識コンソーシアム2003年度(最終)版　PR1
+・マニュアル、インストールマニュアル、など各種テキストの更新
+・コピーライトの更新
+・FSM定義ファイル用マニュアルの作成　manual_config.txt
+・glut32.dllの追加：GLUTライブラリが無くても起動が可能（WINDOWSのみ）
+
+v2.12 2004/02/02
+・コマンドの追加：4コマンド（Agentの動き制御）
+	～以下のコマンドを追加しました．主にエージェントの動きに関するコマンドです．
+	これに伴いProtocal Version を2.02にバージョンアップしました．
+	またコマンド一覧表（command.pdf）を更新しました．
+	（提案ありがとうございました～西本先生）
+
+	１）set AgentEnable	コマンド：Agentの描画の有無
+	<set AgentEnable = (ENABLE or DISABLE)>
+	"set AgentEnable = ENABLE"	... 背景＋エージェントを描画
+	"set AgentEnable = DISABLE"	... 背景のみを描画、エージェントは非表示にする
+	
+	２）set AgentRot コマンド：Agent自身を回転する
+	<set AgentRot = x_angle y_angle z_angle> (degree)
+	（例）
+	"set AgentRot = 10.0 0.0 0.0" 	... Agentを10度x軸回転する
+	"set AgentRot = 0.0 10.0 0.0"	... Agentを10度y軸回転する
+	"set AgentRot = 0.0 0.0 0.0"	... Agentをもとの顔の向きにする	
+	"set AgentRot = -5.0  0.0 0.0"  ... 少し上を向く
+	"set AgentRot =  5.0  0.0 0.0"  ... 少し下を向く
+	"set AgentRot =  0.0 -5.0 0.0"  ... 少し左を向く
+	"set AgentRot =  0.0  5.0 0.0"  ... 少し右を向く
+
+	３）set AgentTrans コマンド：Agent自身を平行移動する
+	<set AgentTrans = x_trans y_trans>
+	"set AgentTrans = 1.0 0.0"	... Agentを1.0水平方向に移動する
+	"set AgentTrans = 0.0 1.0"	... Agentを1.0垂直方向に移動する
+	"set AgentTrans =  0.0  0.2"    ... 少し上に移動
+	"set AgentTrans =  0.0 -0.2"    ... 少し下に移動
+	"set AgentTrans = -0.2  0.0"    ... 少し左に移動
+	"set AgentTrans =  0.2  0.0"    ... 少し右に移動
+
+	４）set AgentScale コマンド：Agent自身を拡大・縮小する
+	<set AgentScale = value>
+	"set AgentScale = 1.2"		... Agentを1.2倍にして表示する
+	"set AgentScale = 0.7"		... Agentを0.7倍にして表示する
+	"set AgentScale = 1.0"          ...  デフォルトの大きさで表示する
+
+・起動時，引数指定でFSMのウインドウサイズ・位置の調節可能
+	fsm [-s size_x sizez_y] [-p pos_x pos_y]
+	*OPTION*
+	[-s size_x size_y] 
+	ウインドウサイズを決定．サイズの指定は横：size_x[pixel]，
+	縦：size_y[pixel]に設定．size_x, size_yはいずれもINT型にて指定可能．
+	[-p pos_x pos_y]
+	ウインドウのポジションを指定．画面左上を起点として右へpos_x[pixel]，
+	下へpos_y[pixel]移動した場所にfsmのウインドウを表示．pos_x, pos_y
+	はいずれもINT型にて指定可能．
+
+
+v2.11 2003/12/15
+・特定のPCで動作できない問題を解決
+	～DELL Precision M60 (CPU:PenM1.7G, Mem:1G, Graphics: NCVIDIA Quadro FX Go700,
+	 OS: WinXP(English))でFSMが起動できない不具合を解決　メモ：glTexCoord2dvに問題？
+
+・プログラムの改良
+	～List.hを削除
+
+v2.10 2003/08/21 Web公開版
+・使用許諾書の追加
+
+v2.07 2003/08/03 CD-ROM Release Candidate 2
+・マニュアルの誤りを訂正
+	～JAIST川本様ありがとうございました．
+
+・Configration.hに#include <stdio.h>を追加
+	～Redhat7.2でのコンパイルが通らない問題を解決．
+	JAIST川本様ありがとうございました．
+
+
+v2.06 2003/08/02 CD-ROM Release Candidate 1
+・口形状の動作以外（自律動作，頭部の動き，瞬き）の動作が描画フレームレートが変化すると
+その動作速度も変化する問題の解決
+	～前Versionではフレームレートは稼げるPCですとNODやLISTEN等の動作が速くなり，
+	逆にフレームレートが低いPCですと動作が遅くなる現象，つまりFPSを考慮に入れてない
+	設定でした．この問題を解決するするため次の変更を行いました．
+
+	～Config.txt内の瞬きの定義変更：前Versionまでは瞬き定義ファイルで設定しましたが
+	"FaceMotBlink 瞬きに要する時間[ms]"で変更可能にした．
+
+	～FaceMot定義ファイル，Autonomous定義ファイルの記述法の変更：前Versionでは
+	"set HeadRotAbs..."と直接コマンド群が羅列していましたがこれですと，時間を
+	管理できないため，このVersionから"キーフレーム時間[ms] x方向 y方向 z方向s"
+	で行うようにしました．また前バージョンですと頭部の動作が絶対値指定であるため
+	他の動作のコンビネーションができませんでしたが，この問題はこのVersionで解決
+	しました．
+	
+・目の移動をなめらかに移動できるよう改良．
+	～ぎこちない目の動きを解消．
+
+・FSMのモジュールがCPUパワーを食いつぶす問題の解決（Linux版にも対応）
+
+・Wire-frame表示の不具合を解消．
+	～白色のWireframeで表示できていない問題を解消．
+
+・ソースコード，アルゴリズムの改良
+
+・Windows版のビルドでGalatea-MMIシステムの通信に対応した構成を制作
+	～構成名：Win32 Release for Galatea MMI 実行ファイル：fsm_mmi.exe
+	（注）システム全体での動作確認をしておりません．申し訳ございません．
+
+・女性エージェントを削除（Woman02）
+	～権利関係の問題でCD-ROM版にはWoman02は含まず．
+
+・コマンド一覧ファイル（PDF）を追加
+	～サポートされているコマンドの一覧をみることができます．
+
+・検証用PCの変更
+	～前バージョン(v2.05）から下記PCにて開発を行っております．
+	（Windows版）
+	1）Test machine 1 (high spec):
+	OS: Windows XP Pro SP1
+	CPU: Dual Intel Xeon-A 2800MHz (5.25 x 533) HT対応（ON）
+	M/B Chip: Inter Placer E7505
+	Memory: 2046MB (Registered ECC DDR SDRAM)
+	Graphics: NVIDIA Quadro4 980 XGL (128MB)
+
+	2）Test machine 2 (note pc):
+	IBM Thinkpad 30T 2366-97E
+	OS: Windows 2000 SP4
+	CPU: Mobile Intel Pentium 4M 2000MHz (5 x 400)
+	M/B Chip: Inter Brookdale i845MP
+	Memory: 1024MB (DDR SDRAM)
+	Graphics: ATI MOBILITY RADEON 7500 (16MB)
+
+	（Linux版）
+	(Test: Framerate: 30+ [fps])
+	CPU: Dual Intel Pentium3 866MHz (6.5 x 133)
+	Memory: 256MB (RDRAM)
+	Graphics: NVIDIA GeForce4MX (64MB)
+	OS: Redhat Linux 9.0
+	kernel: 2.4.20
+	gcc-g++: 3.2.2
+	glut: 3.7.14 （注）14ですと以前起きた問題は発生されません．
+	nvidia driver: 1.4.0 NVIDIA 44.96
+
+v2.05 2003/06/27
+・FSMのモジュールがCPUパワーを食いつぶす問題に関して（Windowsのみ対応）
+	～現状のFSMはIdle時に再描画するような方式をとっております．
+	つまりCPUが暇ならばその分，再描画にまわします．しかしPriorityは大変低いので
+	他のシステムが併用して動いているときはそちらのほうへCPUパワーがまわされます．
+	しかし，それですと見た目大変気持ちが悪いので，最大描画フレームレートを設定する
+	ことで100%CPUパワーを食い尽くすことを回避しました．
+
+	～Config.txtに新たなパラメータを設置．"MaxFrameRate"で最大描画フレームレート
+	が設定可能．設定範囲は最小：1[frame/sec], 最大：画面のリフレッシュレートまで
+
+	(コメント) プログラム記述の容易さからIdle時に再描画するという方式をとっており
+	ました．上記の解決は根本的な解決とは言えませんが，今後の改善予定です．新田先生
+	ご指摘ありがとうございました．
+
+・Windowsでの時間を獲得する関数を変更
+	～GetTickCountの精度が悪いため，Windowsマルチメディア関数のtimeGetTime関数にすべて
+	置き換え．精度を今までの10ms前後を1msに改善．
+
+・Version.txt自体の書き直し
+	～更新順に並び替え
+
+v2.04 (web公開版用予備) 2003/02/28
+・Linux版コンパイル時のWarningが出た箇所を修正
+	～JAIST川本様ありがとうございました．
+
+v2.03 alpha 2003/02/27
+・Linux版の動作確認をRedhat8.0に変更
+	Hardware: Pen4 1.7GHz, Mem 512MB, Graphics: Quadro2 MXR
+	OS: kernel: 2.4.18 gcc: 3.2.7 nvidia1.0-4191
+・肖像権の問題を明確化
+	～Woman02の顔画像は配布不可でお願い致します．
+	～そのほかの画像は今まで名字が入っていましたが問題があると
+	判断しman, womanで統一しました．
+
+・Linux版コンパイルエラーの不都合を解消
+	～問題箇所 #1
+	ReadCommand.cpp 36行目付近
+	const bool (ReadCommand::*pFunc[])(int) = {
+	を
+	bool (ReadCommand::*pFunc[])(int) = {
+	に変更
+	～問題箇所 #2
+	Main.cpp main()部
+	int main(...)に変更．また戻り値0を設定
+
+JAIST川本様，ASTEM山田様のお力添えで解決致しました．
+ありがとうございました．
+
+・コマンドの追加および改善
+これに伴いProtocal Version を2.01にバージョンアップ
+	"set FaceMot = BLINK ??"の追加
+	～このコマンドは瞬きのパターンを定義しています．
+	　ユーザが独自に変更したい場合はConfig.txtを変更してください
+
+	"set Autonomous = BLINK ??"の改善
+	～パターンを定義したためConfig.txtの記述の仕方が変更しています．
+	　詳しくはConfig.txtをご覧ください．
+	　コマンド自体の変更はございません
+
+	"set Autonomous = USER_DEF ??"の追加
+	～Config.txtにUserが定義したファイルを追加することが可能になりました．
+	コマンドの使用法は仕様書と同じです．
+
+	"set HeadRotRel.1 = ?? ?? ??"の改善
+	～動作しておりませんでした．バグをとり訂正致しました．
+
+川本様のご指摘，ありがとうございました．
+
+・READMEの追加
+	～操作方法，および動作検証が書かれています．
+
+v2.02 alpha 2003/02/16
+・コマンドの記述ミスを訂正
+	～以下のコマンドがコマンドセット仕様書と異なるため訂正しました．
+	（旧）set FaceMot = USERDEF_FACEMOT 
+	（新）set FaceMot = USERDEF
+
+	（旧）set FaceExp = SURPRISE
+	（新）set FaceExp = SURPRISED
+
+	（旧）set FaceExp = USERDEF_EXP
+	（新）set FaceExp = USERDEF  
+	*コマンドは登録してありますが，機能していません
+
+	（旧）set Autonomous = BLINKING
+	（新）set Autonomous = BLINK
+	
+・inq ProtocolVersionコマンドが機能しなかった問題を解決
+
+・既知の問題
+	～ある特定の環境で口内が赤と黒の縞模様のように描画されてしまう．
+	確認されている環境 
+	DELL Inspiron 8100 
+	Redhat 7.2 Pen3-M 1.12GHz 512MB Mobility Radeon 7500 (64M)
+
+	～現在問題解決を図っています．しばらくお待ちください．
+
+以上の問題をJAIST川本様が発見して頂きました．ありがとうございました．
+
+v.2.01 alpha 2003/02/11
+・Speakコマンドの致命的バグの解消
+	～皆様にご迷惑をおかけしました。申し訳ございません。
+	＃川本様、西本先生フィードバックありがとうございました。
+
+＊既知の問題
+	～Linux版でReadCommand.cppの38行目付近でコンパイルエラーが発生する現象
+	コンパイラのバージョンによってこの問題が発生するようです。
+	もしエラーが発生致しましたら38行目付近
+	const bool (ReadCommand::*pFunc[])(int) = {
+	を
+	bool (ReadCommand::*pFunc[])(int) = {
+	に変更お願い致します。
+	＃川本様、西本先生フィードバックありがとうございました。
+	＃文法的にはconstがついていない方が正しいのですが…
+
+・コマンドの付加
+	川本様からの依頼で次のコマンドを追加しました。
+	set Run = EXIT ... FSMモジュールを終了
+	set Run = INIT ... 起動時のデフォルトパラメータに全て初期化
+
+・LipSyncコマンドについて（確認）
+	LipSyncコマンドですが，例として
+	set LipSync.pho = a 100 i 100 u 100 e 100 o 100
+	が送られてきますと，FSMの方では
+	set LipSync.pho = # 100 a 100 i 100 u 100 e 100 o 100 # 100
+	つまり，最初と最後に無音区間が100ms追加されます．
+	これは口形状をなめらかなアニメーションにするためこのような処理
+	を行っています．
+	従いまして，set Speak = +600
+	としていたとしても、700ms後に発話が開始します。
+	ご注意ください。
+
+・MouthScaleについて
+	現在デフォルトは30％です．
+
+v.2.00 alpha 2003/02/09
+・Protocal Version を2.00にバージョンアップ
+
+・Module Versionを2.00にアップ (大幅に変更しています、下位互換はありません）
+
+・実行ファイル名を変更：（旧）ab ... (新）fsm
+
+・Windows版、Linux版ともにソースコードを完全共通化。
+	～これに伴い、バージョンを各プラットホーム統一
+	～Windows版の動作検証のため、こちら側でダミープラグを開発 (winsock)
+	～このバージョン以降一般的にソース打ち、検証をWindowsで行いました。
+
+・背景イメージと顔イメージを分離
+	～それに伴い、新たに背景イメージを定義可能となりました（最大１０画像）
+	"set Background 背景の名前 背景イメージのファイル"と定義、尚ファイルは
+	RBG(sgi形式), BMP形式対応。
+
+・FaceFitアプリケーションのバージョンアップにより、肩モデル、髪の毛モデルの追加
+および目のモデルの改良
+	～これに伴い、以前使用していたpntファイル（顔モデルファイル）は使用できなく
+	なります。ご了承ください。また、別途目のテクスチャも必要になります。
+	Config.txtもまた記述が異なっています。
+	モデル１つにつき：顔画像、顔モデル、目のテクスチャ、目の定義ファイル、
+	歯の色定義ファイル
+	の記述が必要になります。
+
+・以下のコマンドを追加
+	～"inq BackgroundSet" ... 背景イメージの一覧を表示
+	～"inq NowBackground" ... 現在の背景イメージ名を表示
+	～"inq NowMask" ... 現在のエージェント名を表示
+
+・目の動きを追加
+	～コマンドを追加しました。
+	コマンド名は"EyeRot"です。引数は x 軸回転角度, y 軸回転角度, 継続時間
+	となり、継続時間が0の場合に継続時間関係なく与えられた角度のまま目を固定します。
+	"set EyeRot = 20.0 0.0 1000"		...　両目を x軸：20度回転 1000ms
+	"set EyeRotLeft = 20.0 0.0 1000"	...　左目を x軸：20度回転 1000ms
+	"set EyeRotRight = 20.0 0.0 1000"	...　右目を x軸：20度回転 1000ms
+	"set EyeRot = 0.0 20.0 0"		...  両目を y軸：20度回転　継続
+	"set EyeRotLeft = 0.0 20.0 0"		...  左目を y軸：20度回転　継続
+	"set EyeRotRight = 0.0 20.0 0"		...  右目を y軸：20度回転　継続
+
+・頭部の動きを追加（改善）
+	～頭部モデルおよび、髪の毛モデル、肩モデルの付加で、頭部がリアルに
+	動くようになりました。従って今まで未サポートである、"set FaceMot"が
+	サポートされました。
+	config.txtにて各基本動作を追加してください。
+	同様に"set HeadRotAbs"も正常な動きをします。(HeadRotRelは未対応)
+	(HeadRotAbs.1のみ対応しています)
+
+・GLUIライブラリの廃止
+	～FSMの機能を限定することにしました。AUの動きを確認する時はFaceFitアプリ
+	を使用して確認してください。現在のところ口の動きを確認はFaceFitでは
+	未対応ですが、近日中にアップデートし、サポート致します。
+	なお、使用しているライブラリはGLUTのみとなっています。
+
+・マウスによるモデルの回転、平行移動、拡大縮小のサポート
+	～前バージョンまでは専用のボタンを使ってモデルを移動させていましたが、
+	GLUIを使用しない現バージョンではマウスを使って移動を行います。
+
+	左ボタンドラッグ - X、Y軸回転
+	中ボタンドラッグ - X、T平行移動
+	右ボタンドラッグ - スケール変換
+
+・キーボード入力での各種機能追加
+	～"r"または"R"ボタン：マウスでの移動をリセット
+	～"f"または"F"ボタン：フルスクリーンモード
+	（注）フルスクリーンにした場合元に戻すことはできません
+	～"Esc"ボタン：モジュールの終了
+
+・コマンドの追加
+	～以下のコマンドを追加しました
+	"set ViewBackground", "inq ViewBackground" 背景の有無
+	"set ViewBackground = ENABLE"	... 背景を描画
+	"set ViewBackground = DISABLE"	... 背景は描画せず
+
+	"set ViewMode", "inq ViewMode" モデルの描画モード
+	"set ViewMode = TEXTURE" ... テクスチャのみ
+	"set ViewMode = TEXTURE_WITH_WIREFRAME"　... テクスチャ＋Wireframe
+	"set ViewMode = WIREFRAME" ... Wireframeのみ
+
+・プログラムの最適化による処理速度の向上
+	～以前より描画能力が飛躍的に向上しています
+
+・フレームレートの計算方法を改善
+
+・口形状アニメーションの補間法を改良
+	～より自然な口形状が再現できます。
+
+v.1.17 2002/05/20
+・バグを除去
+	～JAIST川本さんのご指摘部を書き換え
+	～Backgroundボタンが利かなかった問題を解決
+
+v.1.16 2002/05/20
+・バグ等不都合箇所を改良
+	～Windows版を考慮に入れ、ソース内を再見直し。
+
+v.1.15 2002/05/16
+・Protocal Version を1.23にVersion up
+	～ "set SaveImage"コマンドの拡張
+	・ver1.14まではSGI(RGB)形式のみサポートしていましたが、BMP形式にもサポート
+	しました。ファイル名の拡張子で形式を判断してセーブします。
+	(hoge.rgb ... RGB(SGI) image, hoge.bmp ... Bimap image)
+	サンプルはsrc/debug_sample.datの中に書かれています。	
+
+	～FaceFit（顔画像整合ツール）Linux版の完成に伴い、入力画像もSGI,および
+	BMP形式をサポートしました。拡張子で形式を判断しますのできちんと、config.txt
+	ないのファイル名は *.rgb or *.bmpとお書きください。
+
+	～上記拡張に伴い、Imagelibを削除、撤廃しsrcディレクトリ内に同様な機能を持つ
+	クラスを入れました。
+
+v.1.14 2002/04/10
+・Protocal Version を1.11にVersion up
+	～ "set SaveImage"コマンドをサポート
+	・このコマンドはWindow内のエージェントの顔画像を保存するコマンドです。
+	使用方法は以下の通りです。
+	"set SaveImage = hoge.rgb"
+	hoge.rgb部が保存したいファイル名を指定します。また画像形式はSGI形式
+	です。
+
+v.1.13 2002/03/04
+・画面表示モードが24bitでない場合、エラー終了してしまうため16bitでも動くよう対応
+しました。Main.c++、glutInitDisplayMode()のGLUT_ALPHAオプションを抜きました。
+
+
+v.1.12 2002/02/23 (2001年度提出用その３)
+・"rep Speak"が"req Speal"となる時がある。前に直したのだがまた復活していた模様。
+エラー訂正しました。"inq ProtocolVersion"が"Inq ProtocolVersion"でないとrepしない
+バグを解消
+	～川本さんありがとうございました。
+
+v.1.11 2002/02/18 (2001年度提出用その２)
+・"set FaceExo = NEUTRAL"について。NEUTRALをNATURALととして記述ミスをして
+いました。申し訳ございません。コマンド仕様にに正しく準拠いたしました。
+	～西本先生ご指摘。ありがとうございました。
+
+v.1.10 2002/02/18 (2001年度提出用)
+・コンフィグレーションファイル（data/config.txt）を追加
+	・MaskFile部
+	～ここに使用したい顔画像ファイルを並べる（最大１０名まで大丈夫）
+	～Autonomous用の定義ファイルを並べる
+
+	・AutonomousBlink部
+	～瞬きの出現確率を定義する
+
+	～***これに伴いコマンドセットの定義を変更させていただきます***
+	set Autonomous = 動作ID パターンID
+	動作IDは以下の通り
+		"BLINK","MOVE","USERDEF_AUTONOMOUS":3つにしました
+		各動作を中止させたいときはパターンIDに"0"を入力してください。
+	IDは上から順番に1, 2, 3 ... と自動設定されます。
+
+	・AutonomousMove部
+	～顔の動きが定義されているファイルを読み込む
+	～IDは上から順番に1, 2, 3 ... と自動設定されます。
+	～ファイルの書き方に関する例としては(data/Sample/autonomous1.dat)を
+	参考にしてください。簡単に言いますと"set HeadRotAbs.1 = ? ? ?"の羅列
+	で構成され、システムは一行ずつ呼んでいきます。最終行までよむと開始行
+	へ戻り繰り返し読み込みを行います。
+	(現在のところ使用できるコマンドは"HeadRotAbs.1"のみですご了承ください)
+	
+
+・Protocal Version を1.10にVersion up
+	～ "set Mask" コマンドをサポート
+	・config.txtで設定したマスクの名前をset Maskの入力へ与えてください。
+
+	～ "inq Mask" コマンドをサポート
+	～ "prop Speak.text" コマンドをサポート
+		～ "prop Speak.pho" コマンドをサポート
+		～ "prop Speak.dur" コマンドをサポート
+		～ "prop Speak.utt" コマンドをサポート
+		～ "prop Speak.len" コマンドをサポート
+		～ "prop Speak.stat" コマンドをサポート
+	・いずれもデフォルトは"NoAutoOutput"です
+
+	～ "set MouthScale" コマンドをサポート
+	～ "inq MouthScale" コマンドをサポート
+	・このコマンドは川本さんご提案のもので、口の大きさを決定するものです
+	デフォルトは５０％に設定してあります。set MouthScaleはint型で入力を
+	行ってください。
+
+	～ "set Autonomous = BLINK" コマンドを改良
+	・改良点は上記を参照してください
+
+	～ "set Autonomous = MOVE" コマンドを一部サポート
+	・詳細は上記を参照してください
+	
+	＊FaceMotのサポートの廃止
+	～上記コマンドはまだ利用頻度が低いため、一時的に廃止します。顔モデルを
+	改良の後、直ちにサポートを開始いたします。
+	
+	～ "set FaceExp" コマンドの改良
+	・従来Versionではいきなり表情が変わっていましたが、段階的に変化できる
+	ようになりました。これで自然な表情表出ができると思います。
+	・コマンドセット自体には変更はありません。無表情から表情有りまでの
+	表情変化は経験的にあらかじめセットしてあります。ご要望に応じてこの部分
+	も、変化可能にすることも可能です（ただし次期バージョンから）
+
+v1.01 2002/01
+・GLUIライブラリのバージョンアップ　2.0->2.1
+・nVidia ドライバをバージョンアップさせ動作検証　新バージョン1.0-2313
+	～多少動作速度アップ？
+
+・Main.c++[checkMouthMotion()]部にfflush追加
+	～川本さん、西本先生ご指摘。
+
+v1.00 2001/11
+・とりあえず動く
+

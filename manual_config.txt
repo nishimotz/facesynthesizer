@@ -1,0 +1,163 @@
+FSM定義ファイル　-config.txt-　マニュアル
+2008/08/08更新
+
+０．はじめに
+このファイルはFSMの定義ファイルであるconfig.txtの設定方法が述べられたマニュアル
+です。
+
+１．config.txtの在処
+ディレクトリ：(FSM)\data\
+内にあります。実行ファイルの引数で任意の場所にConfig.txtを置くことが
+できます。
+
+２．編集可能箇所一覧
+この定義ファイルは以下の編集が可能です。
+・エージェントの登録（最大登録数：10）
+・背景の画像ファイルの登録（最大登録数：10）
+・エージェントの振る舞いの登録
+　- うなずき、首を横に振る、首をかしげる、瞬き、（最大登録数：無限）
+・自律動作の登録
+  - 瞬きタイミング、頭の動き、ユーザ定義（最大登録数：無限）
+・描画フレームレート登録
+
+３．コメントアウト
+この定義ファイルは行頭に'#'をつけることでこの行はコメントアウトされます。
+また、空白や定義されていないコマンドを記入するとその行は無視されます。
+（注）無効な行を記入することでシステムが停止することがあります。
+ご注意下さい。
+
+４．編集
+４．１．エージェントの登録
+・編集には以下のコマンドを使用します。
+
+MaskFile: マスクの名前  顔画像ファイル名  pnt(Wireframe)ファイル名 
+MaskEye: マスクの名前 目画像ファイル名 目定義ファイル
+MaskTeeth: マスクの名前 歯定義ファイル
+
+これらコマンドは1つのエージェントを登録する時必ず登録して下さい。
+1つでもかけますと正しく起動しません。
+
+・最大登録数：10
+・例：マスク名をman01とし（マスク名は任意）、顔画像ファイル(bmp,rgb,png形式)、
+目のテクスチャファイル、目定義ファイル、歯定義ファイルを読み込む。
+MaskFile man01 ../sample/man01.rgb ../sample/man01.pnt
+MaskEye man01 ../sample/man01_eye.bmp ../sample/man01_eye.def_e
+MaskTeeth man01 ../sample/man01_teeth.def_t
+
+４．２．背景の画像ファイルの登録
+・編集には以下のコマンドを使用します
+
+BackgroundFile: 背景の名前　背景のファイル名　（登録可能最大１０個まで）
+・最大登録数：10
+・例：背景名をbg1とし（マスク名は任意）、背景ファイル(bmp,rgb,png形式)を読み込む
+BackgroundFile bg1 ../sample/BG/bg1.bmp
+
+４．３．エージェントの振る舞いの登録
+・編集には以下のコマンドを使用します
+
+４．３．１．うなずき（最大登録数：無限）
+FaceMotNod: ファイル名
+（IDは上から順番に1, 2, 3 ... と自動設定されます。）
+例：FaceMot_Nod_1.datを使用してうなずきを行う。
+FaceMotNod ../sample/motion/FaceMot_Nod_1.dat
+（注）FaceMot_Nod_1.datのような動きファイルは独自で作成出来ます。
+詳しくはファイルをご覧下さい。
+
+４．３．２．首を横に振る（最大登録数：無限）
+FaceMotRefuse: ファイル名
+（IDは上から順番に1, 2, 3 ... と自動設定されます。）
+例：FaceMot_Refuse_1.datを使用してうなずきを行う。
+FaceMotRefuse ../sample/motion/FaceMot_Refuse_1.dat
+（注）FaceMot_Refuse_1.datのような動きファイルは独自で作成出来ます。
+詳しくはファイルをご覧下さい。
+
+４．３．３．首をかしげる（最大登録数：無限）
+FaceMotListen: ファイル名 
+IDは上から順番に1, 2, 3 ... と自動設定されます。
+例：FaceMot_Listen_1.datを使用してを首をかしげるを行う。
+FaceMotListen ../sample/motion/FaceMot_Listen_1.dat
+（注）FaceMot_Listen_1.datのような動きファイルは独自で作成出来ます。
+詳しくはファイルをご覧下さい。
+
+４．３．４．瞬き（最大登録数：無限）
+FaceMotBlink 瞬きに要する時間[ms] 
+IDは上から順番に1, 2, 3 ... と自動設定されます。
+例：瞬きに要する時間を100msに設定
+FaceMotBlink 100
+
+４．４．自律動作の登録
+・編集には以下のコマンドを使用します
+
+４．４．１．瞬きのタイミング（最大登録数：無限）
+AutonomousBlink: 出現確率[(整数)%] 瞬きパターン 
+IDは上から順番に1, 2, 3 ... と自動設定されます。
+瞬きパターンはFaceMotBlinkで定義したパターンを入力してください
+例：瞬きの出現確率を1%としパターンを1を使用する。
+AutonomousBlink 1 1
+
+４．４．２．頭部動作（最大登録数：無限）
+AutonomousMove: 顔の動きID ファイル名
+IDは上から順番に1, 2, 3 ... と自動設定されます。
+例：autonomous_move1.datを使用して頭部の自律動作を行う。
+AutonomousMove ../sample/motion/autonomous_move1.dat
+（注）autonomous_move1.datのような動きファイルは独自で作成出来ます。
+詳しくはファイルをご覧下さい。
+
+４．４．３．ユーザ定義（最大登録数：無限）
+AutonomousUserdef: ユーザ定義動作ID ファイル名
+IDは上から順番に1, 2, 3 ... と自動設定されます。
+例：autonomous_userdef1.datを使用して頭部の自律動作を行う。
+AutonomousUserdef ../sample/motion/autonomous_userdef1.dat
+（注）autonomous_userdef1.dattのような動きファイルは独自で作成出来ます。
+詳しくはファイルをご覧下さい。
+
+４．５．最大描画フレームレートの登録
+・編集には以下のコマンドを使用します
+
+最大描画フレームレート（整数，最小:１フレーム，最大:リフレッシュレートまで）
+定義されていない場合は最大描画フレームレート30[Frame/sec]
+例：最大描画レートを30[frame/sec]とする
+MaxFrameRate 30
+
+５．その他（オプション：下記設定は無くても動作します）
+#上歯のOBJファイル名
+U_TEETH_OBJ_NAME ../data/teethUpper.obj
+
+#下歯のOBJファイル名
+L_TEETH_OBJ_NAME ../data/teethLower.obj
+
+#口腔のオブジェクト名
+M_WALL_OBJ_NAME ../data/mouthwall.obj
+
+#目のオブジェクト名
+EYE_OBJ_NAME ../data/eye.obj
+
+#口腔のテクスチャ名
+M_WALL_TEXTURE ../data/mouthwall.bmp
+
+#Windowの幅
+DEF_WINDOW_WIDTH 512
+
+#Windowの高さ
+DEF_WINDOW_HEIGHT 512
+
+#Windowの位置X座標 (ms-winでは動作しません）
+DEF_WINDOW_POS_X 0
+
+#Windowの位置Y座標 (ms-winでは動作しません）
+DEF_WINDOW_POS_Y 0
+
+#標準顔モデル頂点データ名
+DEF_WFM_PNT ../data/fheadv2.pnt
+
+#標準顔モデルリンクデータ名
+DEF_WFM_LNK ../data/fheadv2.lnk
+
+#表情の変化の長さ（ms）
+EXPRESSION_DURATION 100
+
+#瞬きの長さ(ms)
+EYEMOVE_DURATION 70
+
+
+以上

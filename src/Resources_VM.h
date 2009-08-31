@@ -1,0 +1,100 @@
+#ifndef __RESOURCES_VM_H__
+#define __RESOURCES_VM_H__
+
+#define DEFAULT_VM_DIR "../data/_VM_Datas/"
+
+static char *VM_NAME[] = {
+	"/ae/",
+		"/ah/, /ax/",
+		"/A/",
+		"/aa/",
+		"/er/, /ah_r/",
+		"/iy/, /ih/",
+		"/uh/",
+		"/uw/",
+		"/eh/",
+		"/oh/, /ao/",
+		"/ax_r/",
+		"/l/",
+		"/r/",
+		"/p/, /b/, /m/",
+		"/t/",
+		"/d/, /n/",
+		"/k/, /g/, /hh/, /ng/",
+		"/f/, /v/",
+		"/s,z,sh,zh,ts,dz,ch,jh/",
+		"/th/, /dh/",
+		"/y/",
+		"/w/",
+		"/a/",
+		"/i/",
+		"/u/",
+		"/e/",
+		"/o/"
+};
+
+static char *VM_FILE_NAME[] = 
+{  
+	"VISEME01.pnt",
+		"VISEME02.pnt",
+		"VISEME03.pnt",
+		"VISEME04.pnt",
+		"VISEME05.pnt",
+		"VISEME06.pnt",
+		"VISEME07.pnt",
+		"VISEME08.pnt",
+		"VISEME09.pnt",
+		"VISEME10.pnt",
+		"VISEME11.pnt",
+		"VISEME12.pnt",
+		"VISEME13.pnt",
+		"VISEME14.pnt",
+		"VISEME15.pnt",
+		"VISEME16.pnt",
+		"VISEME17.pnt",
+		"VISEME18.pnt",
+		"VISEME19.pnt",
+		"VISEME20.pnt",
+		"VISEME21.pnt",
+		"VISEME22.pnt",
+		"VISEME23.pnt",
+		"VISEME24.pnt",
+		"VISEME25.pnt",
+		"VISEME26.pnt",
+		"VISEME27.pnt",
+};
+
+enum {
+	VM01_MOVE,
+		VM02_MOVE,
+		VM03_MOVE,
+		VM04_MOVE,
+		VM05_MOVE,
+		VM06_MOVE,
+		VM07_MOVE,
+		VM08_MOVE,
+		VM09_MOVE,
+		VM10_MOVE,
+		VM11_MOVE,
+		VM12_MOVE,
+		VM13_MOVE,
+		VM14_MOVE,
+		VM15_MOVE,
+		VM16_MOVE,
+		VM17_MOVE,
+		VM18_MOVE,
+		VM19_MOVE,
+		VM20_MOVE,
+		VM21_MOVE,
+		VM22_MOVE,
+		VM23_MOVE,
+		VM24_MOVE,
+		VM25_MOVE,
+		VM26_MOVE,
+		VM27_MOVE,
+		VM_MOVE_NUM,
+};
+
+
+#endif // __RESOURCES_VM_H__
+

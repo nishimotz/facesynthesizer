@@ -1,0 +1,131 @@
+# 顔画像ファイルの置き場所
+
+# MaskFile: マスクの名前  顔画像ファイル名  pnt(Wireframe)ファイル名 (登録可能最大１０個まで）
+MaskFile man01 ../sample/man01.rgb ../sample/man01.pnt
+MaskFile man02 ../sample/man02.bmp ../sample/man02.pnt
+MaskFile woman01 ../sample/woman01.rgb ../sample/woman01.pnt
+
+# MaskEye: マスクの名前 目画像ファイル名 目定義ファイル (登録可能最大１０個まで）
+MaskEye man01 ../sample/man01_eye.bmp ../sample/man01_eye.def_e
+MaskEye man02 ../sample/man02_eye.bmp ../sample/man02_eye.def_e
+MaskEye woman01 ../sample/woman01_eye.bmp ../sample/woman01_eye.def_e
+
+# MaskTeeth: マスクの名前 歯定義ファイル (登録可能最大１０個まで）
+MaskTeeth man01 ../sample/man01_teeth.def_t
+MaskTeeth man02 ../sample/man02_teeth.def_t
+MaskTeeth woman01 ../sample/woman01_teeth.def_t
+
+# BackgroundFile: 背景の名前　背景のファイル名　（登録可能最大１０個まで）
+BackgroundFile bg1 ../sample/BG/bg1.png
+BackgroundFile bg2 ../sample/BG/bg2.png
+BackgroundFile bg3 ../sample/BG/bg3.png
+BackgroundFile bg4 ../sample/BG/bg4.png
+
+# FaceMot定義ファイルを入れる場所
+
+# うなずき
+# FaceMotNod: ファイル名 （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+# とても早いうなずき
+FaceMotNod ../sample/motion/FaceMot_Nod_1.dat
+# 早いうなずき
+FaceMotNod ../sample/motion/FaceMot_Nod_2.dat
+# 少し遅いうなずき
+FaceMotNod ../sample/motion/FaceMot_Nod_3.dat
+
+# 首を横に振る
+# FaceMotRefuse: ファイル名 （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+# サンプルでは番号が若いほど早く動作します
+FaceMotRefuse ../sample/motion/FaceMot_Refuse_1.dat
+FaceMotRefuse ../sample/motion/FaceMot_Refuse_2.dat
+FaceMotRefuse ../sample/motion/FaceMot_Refuse_3.dat
+
+# 首をかしげる
+# FaceMotListen: ファイル名 （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+# サンプルでは番号が若いほど早く動作します
+FaceMotListen ../sample/motion/FaceMot_Listen_1.dat
+FaceMotListen ../sample/motion/FaceMot_Listen_2.dat
+FaceMotListen ../sample/motion/FaceMot_Listen_3.dat
+
+# 瞬き
+# FaceMotBlink 瞬きに要する時間[ms] （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+FaceMotBlink 100
+FaceMotBlink 200
+FaceMotBlink 400
+FaceMotBlink 600
+
+# ユーザ定義
+# FaceFaceMotUserDef: ファイル名 （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+# FaceMotUserDef 
+
+# Autonomous定義ファイル等を入れる場所
+
+# AutonomousBlink: 出現確率[(整数)%] 瞬きパターン （登録最大可能数：無限）
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+# 瞬きパターンはFaceMotBlinkで定義したパターンを入力してください
+AutonomousBlink 1 1
+AutonomousBlink 1 2
+AutonomousBlink 1 3
+AutonomousBlink 1 4
+AutonomousBlink 2 1
+AutonomousBlink 2 3
+
+# AutonomousMove: 顔の動きID ファイル名 (登録最大可能数：無限)
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+AutonomousMove ../sample/motion/autonomous_move1.dat
+
+# AutonomousUserdef: ユーザ定義動作ID ファイル名 (登録最大可能数：無限)
+# IDは上から順番に1, 2, 3 ... と自動設定されます。
+AutonomousUserdef ../sample/motion/autonomous_userdef1.dat
+
+# 最大描画フレームレート（整数，最小:１フレーム，最大:リフレッシュレートまで）
+# 定義されていない場合は最大描画フレームレート30[Frame/sec]
+MaxFrameRate 30
+
+# Viseme(視覚素）設定　JP：日本語viseme　EN：英語viseme
+SetViseme JP
+#SetViseme EN
+
+#################### verison.2.34から追加 ################
+#上歯のOBJファイル名
+U_TEETH_OBJ_NAME ../data/teethUpper.obj
+
+#下歯のOBJファイル名
+L_TEETH_OBJ_NAME ../data/teethLower.obj
+
+#口腔のオブジェクト名
+M_WALL_OBJ_NAME ../data/mouthwall.obj
+
+#目のオブジェクト名
+EYE_OBJ_NAME ../data/eye.obj
+
+#口腔のテクスチャ名
+M_WALL_TEXTURE ../data/mouthwall.bmp
+
+#Windowの幅
+DEF_WINDOW_WIDTH 512
+
+#Windowの高さ
+DEF_WINDOW_HEIGHT 512
+
+#Windowの位置X座標 (ms-winでは動作しません）
+DEF_WINDOW_POS_X 0
+
+#Windowの位置Y座標 (ms-winでは動作しません）
+DEF_WINDOW_POS_Y 0
+
+#標準顔モデル頂点データ名
+DEF_WFM_PNT ../data/fheadv2.pnt
+
+#標準顔モデルリンクデータ名
+DEF_WFM_LNK ../data/fheadv2.lnk
+
+#表情の変化の長さ（ms）
+EXPRESSION_DURATION 100
+
+#瞬きの長さ(ms)
+EYEMOVE_DURATION 70
