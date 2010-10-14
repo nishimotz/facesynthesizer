@@ -128,7 +128,7 @@ bool checkArg(int &argc, char **argv, string &config_name, int pos[2], int size[
 			case 'C':
 				i++; 
 				config_name = argv[i];
-				printf("detected: -C flag: %s\n", config_name.c_str() );
+				printf("tell detected: -C flag: %s\n", config_name.c_str() );
 				break;
 			case 'p':
 				i++; pos[0] = atoi(argv[i]);
@@ -660,7 +660,7 @@ void myGlutDisplay( void )
 			sprintf(frame_title, "%s - CAPTURE MODE", WINDOW_TITLE );
 		}
 		else {
-			sprintf(frame_title, "%s - %f [fps]", WINDOW_TITLE, _framerate );
+			sprintf(frame_title, "%s - %4.1f [fps]", WINDOW_TITLE, _framerate );
 		}
 		glutSetWindowTitle(frame_title);
 		count = 0;

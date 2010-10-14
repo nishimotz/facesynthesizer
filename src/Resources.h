@@ -23,7 +23,7 @@ const char *const EYE_OBJ_NAME = "../data/eye.obj";
 const char *const M_WALL_TEXTURE = "../data/mouthwall.bmp";
 
 // Version
-const char *const WINDOW_TITLE = "Face Synthesis Module v2.35";
+const char *const WINDOW_TITLE = "Face Synthesis Module v2.35.1";
 const char *const MODULE_VERSION_NAME = "Module Ver. 2.35";
 
 // Define files

@@ -46,7 +46,7 @@ Configuration::Configuration( string configFile )
 
 	// Open Configuration File  
 	if(( fp = fopen( configFile.c_str(), "r" )) == NULL ) {
-		cout << "Cannot open configration file: " 
+		cout << "tell Cannot open configration file: " 
 			<< configFile.c_str() << endl;
 		exit(1);
 	}
@@ -60,55 +60,55 @@ Configuration::Configuration( string configFile )
 			// cout << "Comment out \n" << endl;
 		}
 		else if( m_vsToken[0] == "U_TEETH_OBJ_NAME") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+		        cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sUpperTeethObjName = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "L_TEETH_OBJ_NAME") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sLowerTeethObjName = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "M_WALL_OBJ_NAME") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sMouthWallObjName = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "EYE_OBJ_NAME") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sEyeObjName = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "M_WALL_TEXTURE") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sMouthWallTexture = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "DEF_WFM_PNT") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sDefWfmPnt = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "DEF_WFM_LNK") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_sDefWfmLnk = m_vsToken[1];
 		}
 		else if( m_vsToken[0] == "DEF_WINDOW_WIDTH") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dDefWindowWidth = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == "DEF_WINDOW_HEIGHT") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dDefWindowHeight = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == "DEF_WINDOW_POS_X") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dDefWindowPosX = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == "DEF_WINDOW_POS_Y") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dDefWindowPosY = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == "EXPRESSION_DURATION") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dExpressionDuration = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == "EYEMOVE_DURATION") {
-			cout << m_vsToken[0] << " " << m_vsToken[1] << endl;
+			cout << "tell " << m_vsToken[0] << " " << m_vsToken[1] << endl;
 			m_dEyeMoveDuration = atoi(m_vsToken[1].c_str());
 		}
 		else if( m_vsToken[0] == DEF_MASKFILE ) {
@@ -160,14 +160,14 @@ Configuration::Configuration( string configFile )
 		else if( m_vsToken[0] == DEF_SET_VISEME ) {
 			if( m_vsToken[1] == "JP" ) {
 				m_sVisemeFile = VISEME_JP_FILE;
-				cout << "config: Japanese viseme mode" << endl;
+				cout << "tell config: Japanese viseme mode" << endl;
 			}
 			else if( m_vsToken[1] == "EN" ) {
 				m_sVisemeFile = VISEME_EN_FILE;
-				cout << "config: English viseme mode" << endl;
+				cout << "tell config: English viseme mode" << endl;
 			}
 			else {
-				cout << "error: unknown viseme mode - " << m_vsToken[1] << endl;
+				cout << "tell error: unknown viseme mode - " << m_vsToken[1] << endl;
 			}
 		}
 	}
@@ -220,7 +220,7 @@ bool Configuration::OpenAutonomousMoveFile(string buffer, int num)
 	
 	// Open Autonomous Move File  
 	if(( fp = fopen( buffer.c_str(), "r" )) == NULL ) {
-		cout << "Cannot open configration file: " 
+		cout << "tell Cannot open configration file: " 
 			<< buffer.c_str() << endl;
 		return false;
 	}
@@ -260,7 +260,7 @@ bool Configuration::OpenAutonomousMoveFile(string buffer, int num)
 	// 5s–ÚˆÈ~
 	for( i = 0; i < total_frame_num; i++ ) {
 		if( fgets( buf, 512, fp ) == NULL ) {
-			cout << "cannot find parameter!!" << endl;
+			cout << "tell cannot find parameter!!" << endl;
 			return false;
 		}
 		sscanf( buf, "%d %f %f %f", &frame, &rot_x, &rot_y, &rot_z );
@@ -294,7 +294,7 @@ bool Configuration::OpenFaceMotFile(string buffer, int num)
 	
 	// Open Autonomous Move File  
 	if(( fp = fopen( buffer.c_str(), "r" )) == NULL ) {
-		cout << "Cannot open configration file: " 
+		cout << "tell Cannot open configration file: " 
 			<< buffer.c_str() << endl;
 		return false;
 	}
@@ -348,7 +348,7 @@ bool Configuration::OpenFaceMotFile(string buffer, int num)
 	// 5s–ÚˆÈ~
 	for( i = 0; i < total_frame_num; i++ ) {
 		if( fgets( buf, 512, fp ) == NULL ) {
-			cout << "cannot find parameter!!" << endl;
+			cout << "tell cannot find parameter!!" << endl;
 			return false;
 		}
 		sscanf( buf, "%d %f %f %f", &frame, &rot_x, &rot_y, &rot_z );
