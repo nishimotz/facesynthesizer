@@ -35,20 +35,22 @@ VER	= `date +%Y%m%d`
 # uncomment when debugging
 #DEBUG	= -ggdb -pg # -lefence
 
+ARCH	= -DMACOSX -arch i386
+
 # common (*.o)
-LD	= g++
+LD	= g++ $(ARCH)
 LDFLAGS	= $(DEBUG)
 LDLIBS	= -lglut -lGL -lGLU -lm -L/usr/X11R6/lib -L./glpng/lib -lglpng
 LC++INCS = -I/usr/X11R6/include -I./glpng/include
 
 # C (*.c)
 CC	= gcc
-CFLAGS	= -g -O2 $(DEBUG)
+CFLAGS	= -g -O2 $(DEBUG) $(ARCH)
 CPPFLAGS= -I.
 
 # C++ (*.cpp *.c++)
 CXX	= g++
-CXXFLAGS= -O2 $(DEBUG)
+CXXFLAGS= -O2 $(DEBUG) $(ARCH)
 
 
 # etc

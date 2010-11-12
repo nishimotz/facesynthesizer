@@ -35,8 +35,9 @@ using namespace std;
 
 // •W€“ü—ÍŠÖ˜A‚ÌInclude
 #ifndef WIN32
+#ifndef MACOSX
 #include <termio.h>            /* System V */
-#if 0
+#else
 #include <sgtty.h>             /* 4.2/3 BSD */
 #endif
 #endif
@@ -66,10 +67,16 @@ float _framerate;
 int _main_width, _main_height;
 
 /********** Terminal I/O variables **************/
+#ifdef MACOSX
+ #include <fcntl.h>
+ #include <termios.h>
+ struct sgttyb ttyb,oldttyb;          /* 4.2/3 BSD */
+#else
 #ifndef WIN32
 struct termio tty,oldtty;             /* System V */
-#if 0
-struct sgttyb ttyb,oldttyb;           /* 4.2/3 BSD */
+//#if 0
+//struct sgttyb ttyb,oldttyb;           /* 4.2/3 BSD */
+//#endif
 #endif
 #endif
 

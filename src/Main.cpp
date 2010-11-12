@@ -479,7 +479,7 @@ void myGlutTimer(int value)
 	
 	if(!initflag){
 		initflag = 1;	
-		
+#ifndef MACOSX		
 		/* echo off (System V) */
 		ioctl(0,TCGETA,&tty);
 		oldtty=tty;
@@ -489,7 +489,7 @@ void myGlutTimer(int value)
 		//tty.c_iflag &= ~ICRNL;
 		//tty.c_oflag &= ~ONLCR;
 		ioctl(0,TCSETAW,&tty);
-#if 0
+#else
 		/* echo off (4.2/3 BSD) */
 		ioctl(0,TIOCGETP,&ttyb);
 		oldttyb=ttyb;
